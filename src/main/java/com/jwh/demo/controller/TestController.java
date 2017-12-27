@@ -9,7 +9,6 @@ import java.util.Map;
 @Service
 public class TestController {
 
-
     public Map<String,String> test(CommonRequest request){
         Map<String,String> map = new HashMap<String, String>();
         map.put("key1","1");
