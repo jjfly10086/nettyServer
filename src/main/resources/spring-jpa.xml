@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/data/jpa
+       http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
 
     <bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -18,12 +22,12 @@
         <property name="user" value="${master.jdbc.username}"/>
         <property name="password" value="${master.jdbc.password}"/>
     </bean>
-    <bean id="dataSource-slave2" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+    <!--<bean id="dataSource-slave2" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${jdbc.driverClassName}"/>
         <property name="jdbcUrl" value="${slave2.jdbc.url}"/>
         <property name="user" value="${slave2.jdbc.username}"/>
         <property name="password" value="${slave2.jdbc.password}"/>
-    </bean>
+    </bean>-->
     <!--jpa配置-->
 
     <!-- Hibernate对Jpa的实现 -->
@@ -43,9 +47,7 @@
         <!-- 指定JPA属性；如Hibernate中指定是否显示SQL的是否显示、方言等 -->
         <property name="jpaProperties">
         <props>
-            <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57InnoDBDialect</prop>
-            <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
-            <prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
+            <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
             <prop key="hibernate.show_sql">true</prop>
             <prop key="hibernate.format_sql">false</prop>
             <prop key="hibernate.hbm2ddl.auto">update</prop>
