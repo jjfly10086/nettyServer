@@ -13,12 +13,19 @@ import java.nio.charset.Charset;
 
 public class RestProcessor {
 
-    public void messageReceived(ChannelHandlerContext ctx, final MessageEvent me) throws Exception{
-        System.out.println(me);
+    public void messageReceived(ChannelHandlerContext ctx, final MessageEvent me) {
         DefaultHttpRequest request = (DefaultHttpRequest) me.getMessage();
-        Object resultObj = invokeMethod(request);
-        String data = JSONObject.toJSONString(resultObj);
-        String result = "{\"status\":200,\"data\":"+data+"}";
+        System.out.println(request.getUri());
+        Object resultObj = null;
+        String result = "";
+        try{
+            resultObj = invokeMethod(request);
+            String data = JSONObject.toJSONString(resultObj);
+            result = "{\"status\":200,\"data\":"+data+"}";
+        }catch (Exception e){
+            e.printStackTrace();
+            result = "{\"status\":500,\"msg\":"+e.getMessage()+",\"data\":null}";
+        }
         System.out.println("send result: "+result);
         Channel channel = me.getChannel();
         sendResponse(request,channel,result);
@@ -37,19 +44,31 @@ public class RestProcessor {
     }
 
     private Object invokeMethod(DefaultHttpRequest request) throws Exception{
-        UrlRouter router = (UrlRouter) StartServer.context.getBean("router");
+
         String[] params = request.getUri().split("/");
-        String beanName = router.getNameRouter().get(params[1]);
-        if(beanName!=null && params.length == 3){
-            String methodName = params[2].substring(0,params[2].indexOf("?"));
+        if(params.length == 3){
+            UrlRouter router = StartServer.context.getBean("urlRouter",UrlRouter.class);
+            String beanName = router.getNameRouter().get(params[1]);
+            if(beanName == null){
+                return "no request uri "+ request.getUri()+" found";
+            }
+
+            int methodLastIndex;
+            if(params[2].contains("?")){
+                methodLastIndex = params[2].indexOf("?");
+            }else{
+                methodLastIndex = params[2].length();
+            }
+            String methodName = params[2].substring(0,methodLastIndex);
             String requestArgs = request.getContent().toString(Charset.forName("UTF-8"));
             Method method;
+            Object targetObj = StartServer.context.getBean(beanName);
             try {
-                 method = StartServer.context.getBean(beanName).getClass().getMethod(methodName, CommonRequest.class);
+                method = targetObj.getClass().getMethod(methodName,CommonRequest.class);
             }catch (NoSuchMethodException e ){
                 return "no request uri "+ request.getUri()+" found";
             }
-            return method.invoke(StartServer.context.getBean(beanName),new CommonRequest(JSONObject.parseObject(requestArgs)));
+            return method.invoke(targetObj,new CommonRequest(JSONObject.parseObject(requestArgs)));
         }else{
             return "no request uri "+ request.getUri()+" found";
         }

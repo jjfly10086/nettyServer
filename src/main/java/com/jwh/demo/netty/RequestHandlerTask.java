@@ -18,14 +18,10 @@ public class RequestHandlerTask implements Runnable,Serializable {
         this.event = event;
     }
     public void run() {
-        try{
-            if (event instanceof MessageEvent) {
-                processor.messageReceived(ctx, (MessageEvent)event);
-            } else {
-                ctx.sendUpstream(event);
-            }
-        }catch(Exception e){
-            e.printStackTrace();
+        if (event instanceof MessageEvent) {
+            processor.messageReceived(ctx, (MessageEvent)event);
+        } else {
+            ctx.sendUpstream(event);
         }
     }
 }

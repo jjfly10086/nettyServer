@@ -5,6 +5,7 @@
 
     <bean id="repositoryInterceptor" class="com.jwh.demo.aop.RepositoryInterceptor"/>
 
+    <!--方法拦截器 -->
     <bean id="repositoryAop"  class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
         <property name="beanNames">
             <list>

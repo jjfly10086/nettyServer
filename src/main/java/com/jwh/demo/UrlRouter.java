@@ -1,9 +1,15 @@
 package com.jwh.demo;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Map;
 
-public class UrlRouter {
+@Component
+public class UrlRouter{
 
+    /**
+     * 存储URL和controller beanName的映射关系
+     */
     private Map<String,String> nameRouter;
 
     public Map<String, String> getNameRouter() {
@@ -13,4 +19,5 @@ public class UrlRouter {
     public void setNameRouter(Map<String, String> nameRouter) {
         this.nameRouter = nameRouter;
     }
+
 }
