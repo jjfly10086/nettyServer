@@ -7,7 +7,7 @@
        http://www.springframework.org/schema/data/jpa
        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-
+    <!--属性配置文件-->
     <bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
@@ -15,27 +15,36 @@
             </list>
         </property>
     </bean>
-
+    <!--主数据源-->
     <bean id="dataSource-master" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${jdbc.driverClassName}"/>
         <property name="jdbcUrl" value="${master.jdbc.url}"/>
         <property name="user" value="${master.jdbc.username}"/>
         <property name="password" value="${master.jdbc.password}"/>
     </bean>
-    <!--<bean id="dataSource-slave2" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+    <!--从数据源-->
+    <bean id="dataSource-slave2" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${jdbc.driverClassName}"/>
         <property name="jdbcUrl" value="${slave2.jdbc.url}"/>
         <property name="user" value="${slave2.jdbc.username}"/>
         <property name="password" value="${slave2.jdbc.password}"/>
-    </bean>-->
+    </bean>
+    <!--动态数据源配置-->
+    <bean id="dynamicDataSource" class="com.jwh.demo.datasource.DynamicDataSource">
+        <property name="targetDataSources">
+            <map>
+                <entry key="master" value-ref="dataSource-master"/>
+                <entry key="slave2" value-ref="dataSource-slave2"/>
+            </map>
+        </property>
+    </bean>
     <!--jpa配置-->
-
     <!-- Hibernate对Jpa的实现 -->
     <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <!-- 指定数据源 -->
-        <property name="dataSource" ref="dataSource-master"/>
+        <property name="dataSource" ref="dynamicDataSource"/>
         <!-- 指定Jpa持久化实现厂商类,这里以Hibernate为例 -->
         <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
         <!-- 指定Entity实体类包路径 -->
