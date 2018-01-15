@@ -3,3 +3,6 @@
 具体的实现就是，虚拟的DataSource仅需继承AbstractRoutingDataSource实现determineCurrentLookupKey（）在其中封装数据源的选择逻辑
 再利用AOP拦截jpa dao接口，方法名以find开头的均使用从库查询，其余使用主库
 ### 2.Docker 模拟多库，开启binlog,实现主从复制
+### 3.Spring cache
+自定义cacheManager和cache实现，增加自定义过期时间
+启用：<cache:annotation-driven cache-manager="myCacheManager"/>
