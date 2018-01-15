@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+    <bean id="myCacheManager" class="com.jwh.demo.cache.MyCacheManager">
+       <property name="caches">
+           <set>
+               <!--配置缓存Set集合，缓存名，对应过期时间-->
+               <bean class="com.jwh.demo.cache.MyCache">
+                   <constructor-arg name="name" value="tenSecondTerm"/>
+                   <constructor-arg name="expireSeconds" value="10"/>
+               </bean>
+               <bean class="com.jwh.demo.cache.MyCache">
+                   <constructor-arg name="name" value="oneMinuteTerm"/>
+                   <constructor-arg name="expireSeconds" value="60"/>
+               </bean>
+               <bean class="com.jwh.demo.cache.MyCache">
+                   <constructor-arg name="name" value="tenMinuteTerm"/>
+                   <constructor-arg name="expireSeconds" value="600"/>
+               </bean>
+               <bean class="com.jwh.demo.cache.MyCache">
+                   <constructor-arg name="name" value="oneHourTerm"/>
+                   <constructor-arg name="expireSeconds" value="3600"/>
+               </bean>
+           </set>
+       </property>
+    </bean>
+    <!-- 启用cache注解 cacheManager为自定义cacheManager
+     <cache:annotation-driven/>有一个cache-manager属性用来指定当前所使用的CacheManager对应的bean的名称，默认是cacheManager，所以当我们的CacheManager的id为cacheManager时我们可以不指定该参数，否则就需要我们指定了。-->
+    <cache:annotation-driven cache-manager="myCacheManager"/>
+</beans>
