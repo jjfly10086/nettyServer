@@ -5,16 +5,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/data/jpa
-       http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+       http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <!--属性配置文件-->
-    <bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath*:config.properties</value>
-            </list>
-        </property>
-    </bean>
+
     <!--主数据源-->
     <bean id="dataSource-master" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${jdbc.driverClassName}"/>
