@@ -31,14 +31,12 @@ public class HttpServer {
 
     @PostConstruct
     public void start(){
-        new Thread(new Runnable() {
-            public void run() {
-                try{
-                    service();
-                }catch (Exception e){
-                    e.printStackTrace();
-                    System.exit(0);
-                }
+        new Thread(()-> {
+            try{
+                service();
+            }catch (Exception e){
+                e.printStackTrace();
+                System.exit(0);
             }
         }).start();
     }
@@ -53,20 +51,23 @@ public class HttpServer {
     }
 
     private ChannelFactory getChannelFactory(){
+        //构建boss和work线程池，boss线程接收socket连接，产生channel，然后从work池中选一个线程继续执行
+        //boss线程池默认一个线程，work线程池默认是当前处理器*2的线程数(Runtime.getRuntime().availableProcessors() * 2)
         return new NioServerSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool());
     }
 
-    private ChannelPipelineFactory getChannelPipelineFactory()
-    {
-        return new ChannelPipelineFactory() {
-            public ChannelPipeline getPipeline() throws Exception {
-                // Create a default pipeline implementation.
-                ChannelPipeline pipeline = Channels.pipeline();
-                pipeline.addLast("decoder", new HttpRequestDecoder());
-                pipeline.addLast("encoder", new HttpResponseEncoder());
-                pipeline.addLast("query", restHandler);
-                return pipeline;
-            }
+    private ChannelPipelineFactory getChannelPipelineFactory(){
+        return ()-> {
+            //在worker线程中，消息会经过设定好的ChannelPipeline处理。ChannelPipeline就是一堆有顺序的filter
+            //worker线程是由netty内部管理，统一调配的一种资源，所以最好应该尽快的把让worker线程执行完毕，返回给线程池回收利用
+            //因此在work线程中开启一个新线程来继续处理业务逻辑，而worker线程在执行完messageReceived()就会结束了。
+            //而更加优化的方法是构造一个线程池来提交业务逻辑处理任务。如此处的restHandler
+            // Create a default pipeline implementation.
+            ChannelPipeline pipeline = Channels.pipeline();
+            pipeline.addLast("decoder", new HttpRequestDecoder());
+            pipeline.addLast("encoder", new HttpResponseEncoder());
+            pipeline.addLast("query", restHandler);
+            return pipeline;
         };
     }
 }
