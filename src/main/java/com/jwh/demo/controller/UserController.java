@@ -13,7 +13,7 @@ public class UserController {
     private IUserService userService;
 
     public Object findAll(CommonRequest request){
-        return userService.findAll();
+        return userService.insertAll();
     }
 
     public void insert(CommonRequest request){

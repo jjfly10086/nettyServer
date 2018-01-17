@@ -68,6 +68,12 @@
             <artifactId>hibernate-entitymanager</artifactId>
             <version>5.0.11.Final</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.8.13</version>
+        </dependency>
     </dependencies>
     <!--打包插件-->
     <build>
