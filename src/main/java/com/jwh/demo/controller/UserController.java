@@ -1,11 +1,9 @@
 package com.jwh.demo.controller;
 
 import com.jwh.demo.CommonRequest;
-import com.jwh.demo.dao.UserRepository;
 import com.jwh.demo.model.User;
 import com.jwh.demo.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 
 @Controller
