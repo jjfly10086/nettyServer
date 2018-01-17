@@ -1,5 +1,6 @@
 package com.jwh.demo.service.impl;
 
+import com.jwh.demo.annotation.TestAnnotation;
 import com.jwh.demo.dao.UserRepository;
 import com.jwh.demo.model.User;
 import com.jwh.demo.service.IUserService;
@@ -19,6 +20,7 @@ public class UserServiceImpl implements IUserService {
 
 
     @Override
+    @TestAnnotation
     public List<User> insertAll() {
         User user = new User();
         user.setId(10L);
