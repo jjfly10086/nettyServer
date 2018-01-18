@@ -12,67 +12,83 @@
     <!--properties配置-->
     <properties>
         <config_env>dev</config_env>
+        <netty_version>3.9.9.Final</netty_version>
+        <spring_context_version>5.0.2.RELEASE</spring_context_version>
+        <fastjson_version>1.2.44</fastjson_version>
+        <log4j_version>1.7.25</log4j_version>
+        <c3p0_version>0.9.5.2</c3p0_version>
+        <mysql_connector_version>5.1.42</mysql_connector_version>
+        <jpa_version>2.0.2.RELEASE</jpa_version>
+        <hibernate_core_version>5.1.10.Final</hibernate_core_version>
+        <hibernate_entitymanager_version>5.0.11.Final</hibernate_entitymanager_version>
+        <aspectj_version>1.8.13</aspectj_version>
+        <resource_plugin_version>2.6</resource_plugin_version>
+        <compile_plugin_version>3.1</compile_plugin_version>
+        <jar_plugin_version>2.4</jar_plugin_version>
+        <assembly_plugin_version>2.4</assembly_plugin_version>
+        <resource_encoding>UTF-8</resource_encoding>
+        <java_version>1.8</java_version>
     </properties>
     <!--依赖配置-->
     <dependencies>
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty</artifactId>
-            <version>3.9.9.Final</version>
+            <version>${netty_version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>5.0.2.RELEASE</version>
+            <version>${spring_context_version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.44</version>
+            <version>${fastjson_version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.25</version>
+            <version>${log4j_version}</version>
         </dependency>
         <!--dataSource-->
         <!-- https://mvnrepository.com/artifact/com.mchange/c3p0 -->
         <dependency>
             <groupId>com.mchange</groupId>
             <artifactId>c3p0</artifactId>
-            <version>0.9.5.2</version>
+            <version>${c3p0_version}</version>
         </dependency>
         <!--mysql connector-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.42</version>
+            <version>${mysql_connector_version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
-            <version>2.0.2.RELEASE</version>
+            <version>${jpa_version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.1.10.Final</version>
+            <version>${hibernate_core_version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.0.11.Final</version>
+            <version>${hibernate_entitymanager_version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>1.8.13</version>
+            <version>${aspectj_version}</version>
         </dependency>
     </dependencies>
     <!--打包插件-->
@@ -96,29 +112,29 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
+                <version>${resource_plugin_version}</version>
                 <configuration>
                     <!--设置过滤的配置文件的编码方式-->
-                    <encoding>UTF-8</encoding>
+                    <encoding>${resource_encoding}</encoding>
                 </configuration>
             </plugin>
             <!--compiler plugin-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>${compile_plugin_version}</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${java_version}</source>
+                    <target>${java_version}</target>
                     <!-- 设置源文件编码方式 -->
-                    <encoding>UTF-8</encoding>
+                    <encoding>${resource_encoding}</encoding>
                 </configuration>
             </plugin>
             <!-- The configuration of maven-jar-plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
+                <version>${jar_plugin_version}</version>
                 <!-- The configuration of the plugin -->
                 <configuration>
                     <!-- Configuration of the archiver -->
@@ -147,7 +163,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.4</version>
+                <version>${assembly_plugin_version}</version>
                 <!-- The configuration of the plugin -->
                 <configuration>
                     <!-- Specifies the configuration file of the assembly plugin -->
