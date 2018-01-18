@@ -1,0 +1,1 @@
+java -jar ../nettyServer-1.0-SNAPSHOT.jar

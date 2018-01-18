@@ -24,7 +24,7 @@ public class RestProcessor {
             result = "{\"status\":200,\"data\":"+data+"}";
         }catch (Exception e){
             e.printStackTrace();
-            result = "{\"status\":500,\"msg\":"+e.getMessage()+",\"data\":null}";
+            result = "{\"status\":500,\"msg\":\""+e.getMessage()+"\",\"data\":null}";
         }
         System.out.println("send result: "+result);
         Channel channel = me.getChannel();
@@ -39,8 +39,9 @@ public class RestProcessor {
         boolean close = !HttpHeaders.isKeepAlive(request);
         response.headers().set(HttpHeaders.Names.CONNECTION, close ? HttpHeaders.Values.CLOSE : HttpHeaders.Values.KEEP_ALIVE);
         ChannelFuture cf = channel.write(response);
-        if(close)
+        if(close){
             cf.addListener(ChannelFutureListener.CLOSE);
+        }
     }
 
     private Object invokeMethod(DefaultHttpRequest request) throws Exception{
@@ -50,7 +51,7 @@ public class RestProcessor {
             UrlRouter router = StartServer.context.getBean("urlRouter",UrlRouter.class);
             String beanName = router.getNameRouter().get(params[1]);
             if(beanName == null){
-                return "no request uri "+ request.getUri()+" found";
+                throw new RuntimeException("no request uri \'"+ request.getUri()+"\' found");
             }
 
             int methodLastIndex;
@@ -66,11 +67,17 @@ public class RestProcessor {
             try {
                 method = targetObj.getClass().getMethod(methodName,CommonRequest.class);
             }catch (NoSuchMethodException e ){
-                return "no request uri "+ request.getUri()+" found";
+                throw new RuntimeException("no request uri \'"+ request.getUri()+"\' found");
             }
-            return method.invoke(targetObj,new CommonRequest(JSONObject.parseObject(requestArgs)));
+            JSONObject jsonObject = null;
+            try{
+                jsonObject = JSONObject.parseObject(requestArgs);
+            }catch (Exception e){
+                throw new RuntimeException("request contentType needs \'application/json\'");
+            }
+            return method.invoke(targetObj,new CommonRequest(jsonObject));
         }else{
-            return "no request uri "+ request.getUri()+" found";
+            throw new RuntimeException("no request uri \'"+ request.getUri()+"\' found");
         }
     }
 }
