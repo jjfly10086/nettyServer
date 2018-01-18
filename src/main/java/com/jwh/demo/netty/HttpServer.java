@@ -26,6 +26,8 @@ public class HttpServer {
     private RestExecutionHandler restHandler;
 
     public HttpServer(){
+        //构造一个线程池来提交业务逻辑处理任务
+        //LinkedBlockingQueue用于存储待执行的任务the queue to use for holding tasks before they are executed. This queue will hold only the Runnable tasks submitted by the execute method.
         restHandler = new RestExecutionHandler(new ThreadPoolExecutor(100, 1000, 30, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(500)));
     }
 
