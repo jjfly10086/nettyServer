@@ -12,6 +12,7 @@
     <!--properties配置-->
     <properties>
         <config_env>dev</config_env>
+
         <netty_version>3.9.9.Final</netty_version>
         <spring_context_version>5.0.2.RELEASE</spring_context_version>
         <fastjson_version>1.2.44</fastjson_version>
@@ -22,10 +23,12 @@
         <hibernate_core_version>5.1.10.Final</hibernate_core_version>
         <hibernate_entitymanager_version>5.0.11.Final</hibernate_entitymanager_version>
         <aspectj_version>1.8.13</aspectj_version>
+
         <resource_plugin_version>2.6</resource_plugin_version>
         <compile_plugin_version>3.1</compile_plugin_version>
         <jar_plugin_version>2.4</jar_plugin_version>
         <assembly_plugin_version>2.4</assembly_plugin_version>
+
         <resource_encoding>UTF-8</resource_encoding>
         <java_version>1.8</java_version>
     </properties>
