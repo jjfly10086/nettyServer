@@ -21,23 +21,22 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @TestAnnotation
-    public List<User> insertAll() {
-        User user = new User();
-        user.setId(10L);
-        userRepository.insert(user.getId(),user.getUserName(),user.getUserPass());
-        user.setId(5L);
-        userRepository.insert(user.getId(),user.getUserName(),user.getUserPass());
-//        throw new RuntimeException();
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
     @Override
+    @TestAnnotation
     public void insert(User user) {
-        userRepository.save(user);
+        userRepository.insert(user.getUserName(),user.getUserPass(),
+                user.getNickName(),user.getHeaderImage(),
+                user.getGender(),user.getTelPhone(),
+                user.getAddress(),user.getCreatedTime());
     }
 
     @Override
     @Cacheable(value = "tenSecondTerm",key = "#id")
+    @TestAnnotation
     public User detail(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if(optionalUser.isPresent()){

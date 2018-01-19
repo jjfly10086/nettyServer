@@ -25,7 +25,7 @@ public class TestAnnotationAspect {
     // 如果程序没有调用ProceedingJoinPoint参数的proceed()方法，则目标方法不会被执行。
     @Around("test()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable{
-        System.out.println("aspect test");
+        System.out.println("currentThread："+Thread.currentThread().getName());
         return joinPoint.proceed();
     }
 }

@@ -3,8 +3,11 @@ package com.jwh.demo.controller;
 import com.jwh.demo.CommonRequest;
 import com.jwh.demo.model.User;
 import com.jwh.demo.service.IUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
 
 @Controller
 public class UserController {
@@ -12,8 +15,10 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
+    private static Logger logger = LoggerFactory.getLogger(UserController.class);
+
     public Object findAll(CommonRequest request){
-        return userService.insertAll();
+        return userService.findAll();
     }
 
     public void insert(CommonRequest request){
@@ -24,5 +29,9 @@ public class UserController {
     public User detail(CommonRequest request){
         Long id = request.getJson().getLong("id");
         return userService.detail(id);
+    }
+
+    public void test(CommonRequest request){
+        logger.info(Thread.currentThread().getName());
     }
 }

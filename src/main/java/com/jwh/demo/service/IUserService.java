@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IUserService {
 
-    List<User> insertAll();
+    List<User> findAll();
 
     void insert(User user);
 

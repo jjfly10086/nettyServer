@@ -23,6 +23,7 @@
         <hibernate_core_version>5.1.10.Final</hibernate_core_version>
         <hibernate_entitymanager_version>5.0.11.Final</hibernate_entitymanager_version>
         <aspectj_version>1.8.13</aspectj_version>
+        <http_client_version>4.5.4</http_client_version>
 
         <resource_plugin_version>2.6</resource_plugin_version>
         <compile_plugin_version>3.1</compile_plugin_version>
@@ -93,6 +94,13 @@
             <artifactId>aspectjweaver</artifactId>
             <version>${aspectj_version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${http_client_version}</version>
+        </dependency>
+
     </dependencies>
     <!--打包插件-->
     <build>
