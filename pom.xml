@@ -24,6 +24,7 @@
         <hibernate_entitymanager_version>5.0.11.Final</hibernate_entitymanager_version>
         <aspectj_version>1.8.13</aspectj_version>
         <http_client_version>4.5.4</http_client_version>
+        <junit_version>4.12</junit_version>
 
         <resource_plugin_version>2.6</resource_plugin_version>
         <compile_plugin_version>3.1</compile_plugin_version>
@@ -99,6 +100,25 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>${http_client_version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit_version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>2.0.3.RELEASE</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
         </dependency>
 
     </dependencies>

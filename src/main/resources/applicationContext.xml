@@ -23,4 +23,5 @@
     <import resource="classpath*:spring-jpa.xml"/>
     <import resource="classpath*:spring-aop.xml"/>
     <import resource="classpath*:spring-cache.xml"/>
+    <import resource="classpath*:spring-redis.xml"/>
 </beans>
