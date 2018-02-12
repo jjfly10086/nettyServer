@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class TestAnnotationAspect {
+public class TestAspect {
 
     @Pointcut("@annotation(com.jwh.demo.annotation.TestAnnotation)")
     private void test(){}

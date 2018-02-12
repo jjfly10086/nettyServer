@@ -1,5 +1,7 @@
 package com.jwh.demo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 
@@ -10,12 +12,14 @@ public class StartServer {
 
     public static  ClassPathXmlApplicationContext context;
 
+    private static Logger logger = LoggerFactory.getLogger(StartServer.class);
+
     public static void main(String[] args){
 
         //初始化上下文
         context = new ClassPathXmlApplicationContext("classpath*:applicationContext.xml");
         context.start();
-        System.out.println("url mapping scan start-----------");
+        logger.info("url mapping scan start-----------");
         //url映射扫描
         urlScan();
     }
@@ -38,6 +42,6 @@ public class StartServer {
         }
         UrlRouter router = StartServer.context.getBean("urlRouter",UrlRouter.class);
         router.setNameRouter(urlRouter);
-        System.out.println("url mapping："+ router.getNameRouter());
+        logger.info("url mapping："+ router.getNameRouter());
     }
 }

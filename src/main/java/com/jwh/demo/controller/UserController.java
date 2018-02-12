@@ -21,7 +21,7 @@ public class UserController {
         return userService.findAll();
     }
 
-    public void insert(CommonRequest request){
+    public void insert(CommonRequest request) throws Exception{
         User user = request.getJson().toJavaObject(User.class);
         userService.insert(user);
     }

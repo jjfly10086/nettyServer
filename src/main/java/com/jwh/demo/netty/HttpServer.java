@@ -8,6 +8,8 @@ import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.jboss.netty.handler.codec.http.HttpRequestDecoder;
 import org.jboss.netty.handler.codec.http.HttpResponseEncoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -24,6 +26,8 @@ public class HttpServer {
     private static final Integer DEFAULT_PORT = 8080;
 
     private RestExecutionHandler restHandler;
+
+    private static Logger logger = LoggerFactory.getLogger(HttpServer.class);
 
     public HttpServer(){
         //构造一个线程池来提交业务逻辑处理任务
@@ -49,7 +53,7 @@ public class HttpServer {
         SocketAddress socketAddress = new InetSocketAddress(DEFAULT_PORT);
         serverBootstrap.setPipelineFactory(getChannelPipelineFactory());
         serverBootstrap.bindAsync(socketAddress);
-        System.out.println("Start Success!");
+        logger.info("Start Success!");
     }
 
     private ChannelFactory getChannelFactory(){

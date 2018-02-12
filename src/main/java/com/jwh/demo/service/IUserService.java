@@ -8,7 +8,7 @@ public interface IUserService {
 
     List<User> findAll();
 
-    void insert(User user);
+    void insert(User user) throws Exception;
 
     User detail(Long id);
 }

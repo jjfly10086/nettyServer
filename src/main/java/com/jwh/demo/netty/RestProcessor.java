@@ -7,15 +7,19 @@ import com.jwh.demo.UrlRouter;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.*;
 import org.jboss.netty.handler.codec.http.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 
 public class RestProcessor {
 
+    private static Logger logger = LoggerFactory.getLogger(RestProcessor.class);
+
     public void messageReceived(ChannelHandlerContext ctx, final MessageEvent me) {
         DefaultHttpRequest request = (DefaultHttpRequest) me.getMessage();
-        System.out.println(request.getUri());
+        logger.info("request uri："+request.getUri());
         Object resultObj = null;
         String result = "";
         try{
@@ -26,7 +30,7 @@ public class RestProcessor {
             e.printStackTrace();
             result = "{\"status\":500,\"msg\":\""+e.getMessage()+"\",\"data\":null}";
         }
-        System.out.println("send result: "+result);
+        logger.info("send result: "+result);
         Channel channel = me.getChannel();
         sendResponse(request,channel,result);
     }
