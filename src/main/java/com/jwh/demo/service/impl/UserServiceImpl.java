@@ -11,9 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -50,5 +51,27 @@ public class UserServiceImpl implements IUserService {
             return optionalUser.get();
         }
         return null;
+    }
+
+    @Override
+    public List<User> get(Long id) throws Exception{
+        ExecutorService service = Executors.newFixedThreadPool(8);
+        List<Future<User>> futures = new ArrayList<>();
+        for(int i=0;i<8;i++){
+            Future<User> future = service.submit(new Callable<User>() {
+                @Override
+                public User call() throws Exception {
+                    User user = userRepository.findById(id).get();
+                    TimeUnit.SECONDS.sleep(10);
+                    return user;
+                }
+            });
+            futures.add(future);
+        }
+        List<User> users = new ArrayList<>();
+        for(int i=0;i<8;i++){
+            users.add(futures.get(i).get());
+        }
+        return users;
     }
 }

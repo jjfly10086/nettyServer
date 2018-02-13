@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.charset.Charset;
 
 public class RestProcessor {
@@ -22,10 +24,14 @@ public class RestProcessor {
         logger.info("request uri："+request.getUri());
         Object resultObj = null;
         String result = "";
+        Long startTime = System.currentTimeMillis();
+        Long leaseTime = 0L;
         try{
             resultObj = invokeMethod(request);
+            Long endTime = System.currentTimeMillis();
+            leaseTime = endTime - startTime;
             String data = JSONObject.toJSONString(resultObj);
-            result = "{\"status\":200,\"data\":"+data+"}";
+            result = "{\"status\":200,\"costTime\":\""+leaseTime+"ms\",\"data\":"+data+"}";
         }catch (Exception e){
             e.printStackTrace();
             result = "{\"status\":500,\"msg\":\""+e.getMessage()+"\",\"data\":null}";
@@ -75,6 +81,7 @@ public class RestProcessor {
             }
             JSONObject jsonObject = null;
             try{
+                logger.info("request args："+requestArgs);
                 jsonObject = JSONObject.parseObject(requestArgs);
             }catch (Exception e){
                 throw new RuntimeException("request contentType needs \'application/json\'");

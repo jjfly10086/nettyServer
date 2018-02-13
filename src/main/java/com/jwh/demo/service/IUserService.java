@@ -11,4 +11,6 @@ public interface IUserService {
     void insert(User user) throws Exception;
 
     User detail(Long id);
+
+    List<User> get(Long id) throws Exception;
 }

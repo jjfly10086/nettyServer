@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
+import java.util.concurrent.Future;
+
 
 @Controller
 public class UserController {
@@ -33,5 +36,11 @@ public class UserController {
 
     public void test(CommonRequest request){
         logger.info(Thread.currentThread().getName());
+    }
+
+    public List<User> get(CommonRequest request) throws Exception{
+        Long id = request.getJson().getLong("id");
+        List<User> users = userService.get(id);
+        return users;
     }
 }
